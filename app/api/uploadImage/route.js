@@ -3,13 +3,8 @@ import cloudinary from "cloudinary";
 import connectDB from "@/app/lib/mongodb";
 import Image from "@/app/models/image";
 
-const upload = multer({ dest: "public/uploads/" });
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 connectDB();
 
@@ -18,6 +13,10 @@ cloudinary.v2.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+export const define = {
+  bodyParser: false,
+};
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -30,10 +29,22 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Unable to upload file." });
     }
 
-    const { path } = req.file;
+    const { buffer, originalname } = req.file;
 
     try {
-      const result = await cloudinary.v2.uploader.upload(path);
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.v2.uploader.upload_stream(
+          { resource_type: "image" },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+        stream.end(buffer);
+      });
 
       // Save the image to the database
       await Image.create({
