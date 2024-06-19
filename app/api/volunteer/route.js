@@ -1,31 +1,76 @@
 import { NextResponse } from "next/server";
+import multer from "multer";
+import cloudinary from "cloudinary";
 import connectDB from "@/app/lib/mongodb";
-import volunteer from "@/app/models/volunteer";
+import Image from "@/app/models/image";
+
+// Initialize multer storage in memory
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+// Cloudinary configuration
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Middleware to handle multipart/form-data, used in API route
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export const POST = async (req) => {
   await connectDB();
 
-  try {
-    const body = await req.json();
-    const { userDetails, date, time } = body;
-    console.log("Received userDetails:", userDetails);
+  // Promise wrapper for multer upload
+  const multerUpload = upload.single("file");
+  await new Promise((resolve, reject) => {
+    multerUpload(req, {}, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
 
-    const volunteering = new volunteer({
-      user: userDetails.user,
-      name: userDetails.name,
-      email: userDetails.email,
-      date,
-      time,
+  if (!req.file) {
+    return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+  }
+
+  const { buffer, originalname } = req.file;
+
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.v2.uploader.upload_stream(
+        { resource_type: "image" },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+      stream.end(buffer);
     });
 
-    console.log("Prepared volunteer contribution:", volunteering);
+    // Save the image to the database
+    await Image.create({
+      url: result.secure_url,
+      public_id: result.public_id,
+    });
 
-    await volunteering.save();
-
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ data: result.secure_url }, { status: 200 });
   } catch (error) {
-    console.error("Error saving volunteer contribution:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error during file upload:", error);
+    return NextResponse.json(
+      { error: "Unable to upload file." },
+      { status: 500 }
+    );
   }
 };
 
@@ -39,14 +84,14 @@ export const GET = async (req) => {
   }
 
   try {
-    const volunteerings = await volunteer.find({ user: userId });
+    const images = await Image.find({ user: userId });
 
     return NextResponse.json({
-      volunteerings,
+      images,
       success: true,
     });
   } catch (error) {
-    console.error("Error fetching volunteerings:", error.message);
+    console.error("Error fetching images:", error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };
