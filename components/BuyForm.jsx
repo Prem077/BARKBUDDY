@@ -14,10 +14,11 @@ import {
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import image from "@/public/adopt.webp";
 
-export default function MultipageForm() {
+export default function SinglePageForm() {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -66,35 +67,36 @@ export default function MultipageForm() {
     }
   };
 
-  const nextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const prevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const progressPercentage = ((currentPage - 1) / 4) * 100;
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-lg mx-auto py-8 px-6 bg-white shadow-md rounded-lg"
-    >
-      <div className="mb-6">
-        <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-          <div
-            className="bg-blue-500 h-2.5 rounded-full"
-            style={{ width: `${progressPercentage}%` }}
-          ></div>
+    <div className="min-h-screen flex flex-col mt-[-2rem] md:flex-row">
+      {/* Left Section */}
+      <div className="relative w-full md:w-1/2 flex items-center justify-center bg-black">
+        <Image
+          src={image}
+          alt="Contact"
+          className="absolute inset-0 w-full h-full object-cover opacity-50"
+        />
+        <div className="relative z-10 text-white text-center p-4">
+          <h1 className="text-4xl font-bold mb-4">Adopt a Dog</h1>
+          <p className="text-lg mb-6">
+            Find your new best friend by filling out the form below to get in
+            touch with us.
+          </p>
         </div>
       </div>
 
-      {currentPage === 1 && (
-        <div className="space-y-4">
-          <h1 className="text-3xl font-semibold mb-6 text-center">
-            Personal Information
-          </h1>
+      {/* Right Section */}
+      <div className="w-full md:w-1/2 bg-white p-8 rounded shadow-md flex flex-col justify-center">
+        <h2 className="text-2xl font-semibold mb-2 text-center">
+          Adoption Inquiry Form
+        </h2>
+        <p className="text-gray-700 mb-6 text-center">
+          Please fill out the form below and our team will contact you shortly.
+        </p>
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md mx-auto space-y-4"
+        >
           <div>
             <label htmlFor="name" className="block mb-1 font-medium">
               <FontAwesomeIcon icon={faUser} /> Full Name
@@ -125,23 +127,6 @@ export default function MultipageForm() {
               required
             />
           </div>
-          <div className="flex justify-between">
-            <button
-              type="button"
-              className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
-              onClick={nextPage}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
-
-      {currentPage === 2 && (
-        <div className="space-y-4">
-          <h1 className="text-3xl font-semibold mb-6 text-center">
-            Contact Information
-          </h1>
           <div>
             <label htmlFor="phone" className="block mb-1 font-medium">
               <FontAwesomeIcon icon={faPhone} /> Phone Number
@@ -172,30 +157,6 @@ export default function MultipageForm() {
               required
             ></textarea>
           </div>
-          <div className="flex justify-between">
-            <button
-              type="button"
-              className="mt-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md"
-              onClick={prevPage}
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
-              onClick={nextPage}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
-
-      {currentPage === 3 && (
-        <div className="space-y-4">
-          <h1 className="text-3xl font-semibold mb-6 text-center">
-            Address Information
-          </h1>
           <div>
             <label htmlFor="address" className="block mb-1 font-medium">
               <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
@@ -256,30 +217,6 @@ export default function MultipageForm() {
               required
             />
           </div>
-          <div className="flex justify-between">
-            <button
-              type="button"
-              className="mt-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md"
-              onClick={prevPage}
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
-              onClick={nextPage}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
-
-      {currentPage === 4 && (
-        <div className="space-y-4">
-          <h1 className="text-3xl font-semibold mb-6 text-center">
-            Appointment
-          </h1>
           <div>
             <label htmlFor="date" className="block mb-1 font-medium">
               <FontAwesomeIcon icon={faCalendarAlt} /> Choose Date
@@ -308,14 +245,7 @@ export default function MultipageForm() {
               required
             />
           </div>
-          <div className="flex justify-between">
-            <button
-              type="button"
-              className="mt-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-md"
-              onClick={prevPage}
-            >
-              Previous
-            </button>
+          <div className="flex justify-center">
             <button
               type="submit"
               className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
@@ -323,16 +253,13 @@ export default function MultipageForm() {
               Submit
             </button>
           </div>
-        </div>
-      )}
-
-      <div className="mt-6">
-        {success && (
-          <div className="text-green-800 bg-gray-100 px-4 py-2 rounded-md">
-            Form submitted successfully!
-          </div>
-        )}
+          {success && (
+            <div className="text-green-800 bg-gray-100 px-4 py-2 rounded-md mt-4">
+              Form submitted successfully!
+            </div>
+          )}
+        </form>
       </div>
-    </form>
+    </div>
   );
 }

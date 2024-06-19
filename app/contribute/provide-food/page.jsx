@@ -7,7 +7,6 @@ import { useUser } from "@clerk/nextjs";
 import toast, { Toaster } from "react-hot-toast";
 import food from "@/public/feed.jpg";
 import Image from "next/image";
-import Loading from "@/app/Loading";
 
 const ProvideFoodPage = () => {
   const { user } = useUser();
@@ -69,7 +68,7 @@ const ProvideFoodPage = () => {
   };
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<div>Loading...........</div>}>
       <div className="min-h-screen flex mt-[-2rem]">
         <Toaster />
         <div className="relative w-1/2 flex items-center justify-center bg-black">

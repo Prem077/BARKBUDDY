@@ -10,7 +10,7 @@ const Page = async () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-50 to-blue-100 p-4">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row items-center gap-8">
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center md:w-1/3">
           <Image
             src={image}
             width={150}
@@ -19,7 +19,7 @@ const Page = async () => {
             className="rounded-full border-4 border-blue-500"
           />
         </div>
-        <div className="flex flex-col gap-4 text-center md:text-left">
+        <div className="flex flex-col gap-4 text-center md:text-left md:w-2/3">
           <p className="text-lg font-semibold">
             First Name: <span className="font-normal">{user.firstName}</span>
           </p>

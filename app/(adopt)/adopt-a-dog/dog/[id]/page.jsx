@@ -67,13 +67,15 @@ const Page = () => {
         <FaDog className="mr-2" />
         {selectedDog.name}
       </h1>
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="p-6">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden flex">
+        <div className="w-1/3">
           <img
             src={selectedDog.pictureURL} // Ensure to use correct property names based on your API response
             alt={selectedDog.name}
-            className="w-full h-64 object-cover rounded-md"
+            className="w-full h-full object-cover rounded-l-md"
           />
+        </div>
+        <div className="w-2/3 p-6">
           <h2 className="text-2xl font-bold mt-4 mb-2 flex items-center">
             <GiSittingDog className="mr-2" />
             {selectedDog.name}
@@ -96,7 +98,7 @@ const Page = () => {
           </p>
           <p className="text-gray-700 mb-4">{selectedDog.story}</p>
 
-          <Link href={`/adopt-a-dog/dog/${id}/tnc`}>
+          <Link href={`/checkout`}>
             <button className="mt-6 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
               Adopt {selectedDog.name}
             </button>

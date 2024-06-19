@@ -20,10 +20,10 @@ export const SOCIAL_LINKS = [
 ];
 
 export const LINKS = [
-  { name: "CONTRIBUTE", link: "/contribute", id: 1 },
+  { name: "ADOPT A DOG", link: "/adopt-a-dog", id: 1 },
   { name: "LIST A DOG", link: "/add-a-dog", id: 2 },
-  { name: "BUY PRODUCTS", link: "/buy", id: 3 },
-  { name: "ADOPT A DOG", link: "/adopt-a-dog", id: 4 },
+  { name: "CONTRIBUTE", link: "/contribute", id: 3 },
+  { name: "BUY PRODUCTS", link: "/buy", id: 4 },
   { name: "CONTACT", link: "/contact", id: 5 },
 ];
 

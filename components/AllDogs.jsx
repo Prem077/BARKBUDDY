@@ -7,9 +7,9 @@ const AllDogs = () => {
   const [dogs, setDogs] = useState([]);
   const [filteredDogs, setFilteredDogs] = useState([]);
   const [filters, setFilters] = useState({
-    breed: "",
-    age: "",
-    gender: "",
+    state: "",
+    district: "",
+    size: "",
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [dogsPerPage] = useState(6); // Number of dogs per page
@@ -42,30 +42,36 @@ const AllDogs = () => {
   useEffect(() => {
     let filteredResults = dogs.filter((dog) => {
       return (
-        (filters.breed === "" ||
-          dog.breed.toLowerCase().includes(filters.breed.toLowerCase())) &&
-        (filters.age === "" || dog.age.toString() === filters.age) &&
-        (filters.gender === "" ||
-          dog.gender.toLowerCase() === filters.gender.toLowerCase())
+        (filters.state === "" ||
+          dog.state.toLowerCase().includes(filters.state.toLowerCase())) &&
+        (filters.district === "" ||
+          dog.district
+            .toLowerCase()
+            .includes(filters.district.toLowerCase())) &&
+        (filters.size === "" ||
+          dog.size.toLowerCase() === filters.size.toLowerCase())
       );
     });
     setFilteredDogs(filteredResults);
     setCurrentPage(1); // Reset to first page when filters change
   }, [dogs, filters]);
 
-  // Array of example breeds
-  const exampleBreeds = [
-    "Labrador Retriever",
-    "German Shepherd",
-    "Golden Retriever",
-    "Bulldog",
-    "Poodle",
-    "Beagle",
-    "Rottweiler",
-    "Yorkshire Terrier",
-    "Boxer",
-    "Dachshund",
+  // Array of example states and districts
+  const exampleStates = [
+    "California",
+    "Texas",
+    "New York",
+    "Florida",
+    "Illinois",
   ];
+  const exampleDistricts = [
+    "District 1",
+    "District 2",
+    "District 3",
+    "District 4",
+    "District 5",
+  ];
+  const exampleSizes = ["Small", "Medium", "Large"];
 
   // Pagination
   const indexOfLastDog = currentPage * dogsPerPage;
@@ -76,7 +82,7 @@ const AllDogs = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8 bg-white  rounded-lg">
+    <div className="max-w-6xl mx-auto p-4 md:p-8 bg-gray-50 shadow-lg rounded-lg">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Available Dogs for Adoption
       </h1>
@@ -84,57 +90,66 @@ const AllDogs = () => {
       {/* Filters */}
       <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4 mb-4">
         <div className="w-full md:w-auto">
-          <label htmlFor="breed" className="block font-medium">
-            Breed:
+          <label htmlFor="state" className="block font-medium">
+            State:
           </label>
           <select
-            id="breed"
-            name="breed"
-            value={filters.breed}
+            id="state"
+            name="state"
+            value={filters.state}
             onChange={handleFilterChange}
             className="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 w-full"
           >
-            <option value="">Select a breed</option>
-            {exampleBreeds.map((breed) => (
-              <option key={breed} value={breed}>
-                {breed}
+            <option value="">Select a state</option>
+            {exampleStates.map((state) => (
+              <option key={state} value={state}>
+                {state}
               </option>
             ))}
           </select>
         </div>
         <div className="w-full md:w-auto">
-          <label htmlFor="age" className="block font-medium">
-            Age:
-          </label>
-          <input
-            type="text"
-            id="age"
-            name="age"
-            value={filters.age}
-            onChange={handleFilterChange}
-            className="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 w-full"
-          />
-        </div>
-        <div className="w-full md:w-auto">
-          <label htmlFor="gender" className="block font-medium">
-            Gender:
+          <label htmlFor="district" className="block font-medium">
+            District:
           </label>
           <select
-            id="gender"
-            name="gender"
-            value={filters.gender}
+            id="district"
+            name="district"
+            value={filters.district}
+            onChange={handleFilterChange}
+            className="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 w-full"
+          >
+            <option value="">Select a district</option>
+            {exampleDistricts.map((district) => (
+              <option key={district} value={district}>
+                {district}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-full md:w-auto">
+          <label htmlFor="size" className="block font-medium">
+            Size:
+          </label>
+          <select
+            id="size"
+            name="size"
+            value={filters.size}
             onChange={handleFilterChange}
             className="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 w-full"
           >
             <option value="">Any</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            {exampleSizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
           </select>
         </div>
       </div>
 
       {/* Dogs */}
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {currentDogs.length > 0 ? (
           currentDogs.map((dog) => <Card key={dog._id} dog={dog} />)
         ) : (

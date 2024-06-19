@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import expertisatino from "@/public/time.jpg";
-import Loading from "@/app/Loading";
-
 const ExpertisePage = () => {
   const { user } = useUser();
   const router = useRouter();
@@ -62,7 +60,7 @@ const ExpertisePage = () => {
   };
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<div>Loading...........</div>}>
       <div className="min-h-screen flex mt-[-2rem]">
         <Toaster />
         <div className="relative w-1/2 flex items-center justify-center bg-black">

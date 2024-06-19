@@ -3,11 +3,10 @@ import { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import ContactForm from "@/components/ContactForm";
 import image from "@/public/dog.webp";
-import Loading from "../Loading";
 
 const Page = () => {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<div>Loading...........</div>}>
       <div className="min-h-screen flex mt-[-2rem] flex-col md:flex-row">
         <Toaster />
         {/* Left Section */}
@@ -23,17 +22,6 @@ const Page = () => {
               Get in touch with our team by choosing what kind of services you
               are looking for.
             </p>
-            {/* <div className="border border-gray-300 rounded-xl p-4 bg-white text-black">
-              <div className="flex items-center mb-3">
-                <span className="ml-2">123 Main Street, Anytown, USA</span>
-              </div>
-              <div className="flex items-center mb-3">
-                <span className="ml-2">+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center">
-                <span className="ml-2">FurryFriendsSupport@gmail.com</span>
-              </div>
-            </div> */}
           </div>
         </div>
         {/* Right Section */}

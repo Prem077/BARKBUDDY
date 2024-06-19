@@ -1,7 +1,6 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@/app/loading";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import toast, { Toaster } from "react-hot-toast";
@@ -112,7 +111,7 @@ const Payment = () => {
 
   return (
     <>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<div>Loading...........</div>}>
         <div className="min-h-screen mt-[-2rem] flex">
           <Toaster />
           <div className="relative w-1/2 flex items-center justify-center bg-black">
