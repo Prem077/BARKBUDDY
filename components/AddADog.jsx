@@ -45,7 +45,7 @@ const AddADog = () => {
 
     const uploadData = new FormData();
     uploadData.append("file", formData.picture);
-    uploadData.append("name", formData.name); // Append the name field
+    uploadData.append("name", formData.name);
 
     try {
       const uploadRes = await axios.post("/api/upload-image", uploadData, {
@@ -67,9 +67,9 @@ const AddADog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12">
-      <div className="max-w-2xl mx-auto p-8 bg-white shadow-md rounded-lg">
-        <h1 className="text-3xl font-bold mb-8 text-center text-indigo-600">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="p-8 bg-white shadow-lg rounded-xl w-full max-w-2xl">
+        <h1 className="text-3xl font-semibold mb-8 text-center text-indigo-700">
           List a Dog for Adoption
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -83,7 +83,7 @@ const AddADog = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -96,7 +96,7 @@ const AddADog = () => {
               value={formData.place}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -108,7 +108,7 @@ const AddADog = () => {
               value={formData.story}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div className="flex items-center">
@@ -145,7 +145,7 @@ const AddADog = () => {
               value={formData.training}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -157,7 +157,7 @@ const AddADog = () => {
               value={formData.gender}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -176,7 +176,7 @@ const AddADog = () => {
               value={formData.breed}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             >
               <option value="">Select a breed</option>
               <option value="Labrador Retriever">Labrador Retriever</option>
@@ -201,7 +201,7 @@ const AddADog = () => {
               value={formData.age}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -214,7 +214,7 @@ const AddADog = () => {
               value={formData.color}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -227,7 +227,7 @@ const AddADog = () => {
               value={formData.weight}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -240,7 +240,7 @@ const AddADog = () => {
               value={formData.height}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -249,7 +249,7 @@ const AddADog = () => {
             </label>
             <div
               {...getRootProps()}
-              className={`mt-1 p-6 border-2 border-dashed rounded-md ${
+              className={`mt-1 p-6 border-2 border-dashed rounded-lg ${
                 isDragActive ? "border-indigo-600" : "border-gray-300"
               }`}
             >
@@ -265,7 +265,7 @@ const AddADog = () => {
           </div>
           <button
             type="submit"
-            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             List Dog for Adoption
           </button>

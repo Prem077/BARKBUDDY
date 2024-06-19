@@ -9,8 +9,8 @@ const Logo = () => (
   <Link href="/">
     <div className="font-bold text-2xl cursor-pointer flex items-center gap-1">
       {/* <BookOpenIcon className="w-7 h-7 text-blue-600" /> */}
-      <Image src={logo} className="h-10 w-10" />
-      <span>BARKBUDDY</span>
+      {/* <Image src={logo} className="h-10 w-10" /> */}
+      <span className="text-white">BARKBUDDY</span>
     </div>
   </Link>
 );

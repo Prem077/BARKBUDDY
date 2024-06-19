@@ -5,18 +5,21 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const VolunteerPage = () => {
+const ExpertisePage = () => {
   const { user } = useUser();
   const router = useRouter();
   const [formData, setFormData] = useState({
     date: "",
     time: "",
+    expertise: "",
+    hours: "", // Add hours to the formData state
   });
   const [userDetails, setUserDetails] = useState({
     user: "",
     name: "",
     email: "",
   });
+
   useEffect(() => {
     if (user) {
       setUserDetails({
@@ -34,16 +37,17 @@ const VolunteerPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     try {
-      const res = await axios.post("/api/volunteer", {
+      const res = await axios.post("/api/expertise", {
         userDetails,
         ...formData,
       });
-      toast.success("Expertise listed successfully! Redirecting...");
       console.log("Received response:", res.data);
       console.log("Contribution saved successfully");
-      router.push("/contribute/volunteer/my-volunteering");
+      toast.success("Expertise listed successfully! Redirecting...");
+      setTimeout(() => {
+        router.push("/contribute/offer-expertise/my-expertise");
+      }, 2000); // Redirect after 2 seconds
     } catch (error) {
       console.error("Failed to save contribution details", error);
       toast.error("Failed to list expertise. Please try again.");
@@ -53,7 +57,7 @@ const VolunteerPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <Toaster />
+      <Toaster /> {/* Add Toaster component here */}
       <div className="bg-white p-8 rounded shadow-md w-full max-w-xl">
         <h1 className="text-3xl font-bold mb-4 text-center">
           BARKBUDDY Volunteer Signup
@@ -102,6 +106,45 @@ const VolunteerPage = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="hours"
+            >
+              Hours
+            </label>
+            <input
+              type="number"
+              id="hours"
+              name="hours"
+              value={formData.hours}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="expertise"
+            >
+              Type of Expertise
+            </label>
+            <select
+              id="expertise"
+              name="expertise"
+              value={formData.expertise}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option value="" disabled>
+                Select expertise
+              </option>
+              <option value="training">Training</option>
+              <option value="veterinary">Veterinary Services</option>
+              <option value="grooming">Grooming</option>
+              <option value="nutrition">Nutrition</option>
+            </select>
+          </div>
           <div className="flex items-center justify-between">
             <button
               type="submit"
@@ -126,4 +169,4 @@ const VolunteerPage = () => {
   );
 };
 
-export default VolunteerPage;
+export default ExpertisePage;

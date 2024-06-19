@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
+import toast, { Toaster } from "react-hot-toast";
 
 const ProvideFoodPage = () => {
   const { user } = useUser();
@@ -62,9 +63,11 @@ const ProvideFoodPage = () => {
         ...formData,
       });
       setSuccess(response.data.message);
+      toast.success("Food donation listed successfully! Redirecting...");
       router.push("/contribute/provide-food/my-donations");
     } catch (error) {
       setError(error.response?.data?.msg || error.message);
+      toast.error("Failed to list expertise. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -72,6 +75,7 @@ const ProvideFoodPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
+      <Toaster />
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom align="center">
           Provide Food Donation

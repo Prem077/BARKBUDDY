@@ -3,7 +3,7 @@ import { COMPANY_LINKS, SUPPORT_LINKS, SOCIAL_LINKS } from "@/constants/index";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-8">
+    <footer className="bg-black text-white py-8">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <h2 className="text-xl font-bold mb-4">Company</h2>
@@ -44,7 +44,8 @@ const Footer = () => {
       </div>
       <div className="container mx-auto text-center mt-8">
         <p className="text-sm">
-          &copy; 2024 Company Name. All rights reserved.
+          &copy; 2024 <span className="text-yellow-400">BARKBUDDY</span> . All
+          rights reserved.
         </p>
       </div>
     </footer>

@@ -1,9 +1,3 @@
-import Landing from "@/components/Landing";
-import Parallel from "@/components/Parallel";
-import Spark from "@/components/Spark";
-import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
-import React from "react";
-
 const testimonials = [
   {
     quote:
@@ -36,34 +30,24 @@ const testimonials = [
   },
 ];
 
-const page = () => {
+import React from "react";
+import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
+
+const Testimonials = () => {
   return (
-    <div className="">
-      <div className="h-[50rem] w-full bg-black   dark:bg-white  bg-grid-white/[0.2] dark:bg-grid-black/[0.2] relative flex flex-1 items-center justify-center">
-        {/* Radial gradient for the container to give a faded look */}
-        <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black dark:bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <div className=" ">
-          <InfiniteMovingCards
-            items={testimonials}
-            direction="right"
-            speed="slow"
-          />
-        </div>
-      </div>
-      <div className="bg-black">
-        <Parallel />
-      </div>
-      <div className="h-[40rem] rounded-md flex flex-col antialiased dark:bg-white bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+    <div className="bg-black">
+      <h1 className="text-white text-4xl font-bold px-8">
+        Look what our user have to say about us
+      </h1>
+      <div className="h-[40rem]  flex flex-col antialiased dark:bg-white bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
         <InfiniteMovingCards
           items={testimonials}
           direction="right"
           speed="slow"
         />
       </div>
-      <Landing />
-      <Spark />
     </div>
   );
 };
 
-export default page;
+export default Testimonials;

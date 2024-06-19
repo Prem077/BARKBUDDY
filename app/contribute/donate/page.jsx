@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
+import toast, { Toaster } from "react-hot-toast";
 
 const loadRazorpayScript = () => {
   return new Promise((resolve) => {
@@ -21,7 +22,6 @@ const loadRazorpayScript = () => {
 
 const Payment = () => {
   const { user } = useUser();
-  console.log(user);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState(0);
@@ -69,8 +69,6 @@ const Payment = () => {
       order_id: order.id,
       description: "BARKBUDDY Donation",
       handler: async function (response) {
-        console.log(response);
-
         try {
           const res = await axios.post("/api/donate", {
             userDetails,
@@ -80,11 +78,13 @@ const Payment = () => {
             signature: response.razorpay_signature,
           });
 
-          console.log(res.data);
-
-          router.push(`donate/my-donations`);
+          toast.success("Payment successful! Redirecting to your donations...");
+          setTimeout(() => {
+            router.push("donate/my-donations");
+          }, 3000);
         } catch (error) {
           console.error("Failed to save contribution details", error);
+          toast.error("Failed to save contribution details. Please try again.");
         }
       },
       prefill: {
@@ -98,7 +98,7 @@ const Payment = () => {
     paymentObject.open();
 
     paymentObject.on("payment.failed", function (response) {
-      alert("Payment failed. Please try again. Contact support for help");
+      toast.error("Payment failed. Please try again. Contact support for help");
     });
   };
 
@@ -140,6 +140,7 @@ const Payment = () => {
             </button>
           </form>
         </div>
+        <Toaster />
       </Suspense>
     </>
   );
