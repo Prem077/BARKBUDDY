@@ -1,42 +1,56 @@
-import ContactForm from "@/components/ContactForm";
+import React, { Suspense } from "react";
+import { Toaster } from "react-hot-toast";
 import Image from "next/image";
-import image from "@/assets/image.png";
-import map from "@/assets/map.png";
-import call from "@/assets/call.png";
-import gmail from "@/assets/gmail.png";
+import ContactForm from "@/components/ContactForm";
+import image from "@/public/dog.webp";
+import Loading from "../Loading";
 
 const Page = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center mb-10">
-      {/* Left Section */}
-      <div className="md:mr-10 mb-10 md:mb-0 text-center md:text-left">
-        <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-        <p className="mb-4">
-          Get in touch with our team by choosing what kind of our services you
-          are looking for.
-        </p>
-        <div className="w-64 md:w-auto">
-          <Image src={image} alt="Contact" />
+    <Suspense fallback={<Loading />}>
+      <div className="min-h-screen flex mt-[-2rem] flex-col md:flex-row">
+        <Toaster />
+        {/* Left Section */}
+        <div className="relative w-full md:w-1/2 flex items-center justify-center bg-black">
+          <Image
+            src={image}
+            alt="Contact"
+            className="absolute inset-0 w-full h-full object-cover opacity-50"
+          />
+          <div className="relative z-10 text-white text-center p-4">
+            <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+            <p className="text-lg mb-6">
+              Get in touch with our team by choosing what kind of services you
+              are looking for.
+            </p>
+            {/* <div className="border border-gray-300 rounded-xl p-4 bg-white text-black">
+              <div className="flex items-center mb-3">
+                <span className="ml-2">123 Main Street, Anytown, USA</span>
+              </div>
+              <div className="flex items-center mb-3">
+                <span className="ml-2">+1 (555) 123-4567</span>
+              </div>
+              <div className="flex items-center">
+                <span className="ml-2">FurryFriendsSupport@gmail.com</span>
+              </div>
+            </div> */}
+          </div>
         </div>
-        <div className="border border-[#CBCBCB] rounded-xl mt-5 p-4">
-          <div className="flex items-center mb-3">
-            <Image src={map} alt="Map" className="h-8 w-8" />
-            <span className="ml-2">123 Main Street, Anytown, USA</span>
-          </div>
-          <div className="flex items-center mb-3">
-            <Image src={call} alt="Call" className="h-8 w-8" />
-            <span className="ml-2">+1 (555) 123-4567</span>
-          </div>
-          <div className="flex items-center">
-            <Image src={gmail} alt="Gmail" className="h-8 w-8" />
-            <span className="ml-2">FurryFriendsSupport@gmail.com</span>
+        {/* Right Section */}
+        <div className="w-full md:w-1/2 bg-white p-8 rounded shadow-md flex flex-col justify-center">
+          <h2 className="text-2xl font-semibold mb-2 text-center">
+            Send Us a Message
+          </h2>
+          <p className="text-gray-700 mb-6 text-center">
+            We would love to hear from you! Please fill out the form below and
+            we will get in touch with you shortly.
+          </p>
+          <div className="w-full max-w-md mx-auto">
+            <ContactForm />
           </div>
         </div>
       </div>
-      <div className="md:w-96">
-        <ContactForm />
-      </div>
-    </div>
+    </Suspense>
   );
 };
 

@@ -37,12 +37,12 @@ export default function ContactForm() {
       setFullname("");
       setEmail("");
       setMessage("");
-      router.push(`/contact/success?msg=success&name="${fullname}`);
+      // router.push(`/contact/success?msg=success&name="${fullname}`);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto py-4 px-6 ">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto py-4 px-6">
       <div className="mb-4">
         <label htmlFor="fullname" className="block mb-1">
           Full Name
