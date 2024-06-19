@@ -1,18 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Paper,
-  Box,
-  Alert,
-} from "@mui/material";
+
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import toast, { Toaster } from "react-hot-toast";
+import food from "@/public/feed.jpg";
+import Image from "next/image";
+import Loading from "@/app/Loading";
 
 const ProvideFoodPage = () => {
   const { user } = useUser();
@@ -74,99 +69,142 @@ const ProvideFoodPage = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Toaster />
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom align="center">
-          Provide Food Donation
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Date"
-            name="date"
-            type="date"
-            value={formData.date}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
+    <Suspense fallback={<Loading />}>
+      <div className="min-h-screen flex mt-[-2rem]">
+        <Toaster />
+        <div className="relative w-1/2 flex items-center justify-center bg-black">
+          <Image
+            src={food}
+            alt="Food donation"
+            className="absolute inset-0 w-full h-full object-cover opacity-50"
           />
-          <TextField
-            label="Time"
-            name="time"
-            type="time"
-            value={formData.time}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            label="Food Type"
-            name="foodType"
-            value={formData.foodType}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-          />
-          <TextField
-            label="Quantity"
-            name="quantity"
-            type="number"
-            value={formData.quantity}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-          />
-          <TextField
-            label="Location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-          />
-          <TextField
-            label="Notes"
-            name="notes"
-            value={formData.notes}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-          {error && (
-            <Alert severity="error" sx={{ mt: 2 }}>
-              {error}
-            </Alert>
-          )}
-          {success && (
-            <Alert severity="success" sx={{ mt: 2 }}>
-              {success}
-            </Alert>
-          )}
-          <Box sx={{ mt: 2 }}>
-            <Button
+          <div className="relative z-10 text-white text-center p-4">
+            <h1 className="text-4xl font-bold mb-4">Provide Food Donation</h1>
+            <p className="text-lg mb-6">
+              Help us feed the animals in need by donating food. Your
+              contribution is vital in ensuring that the animals under our care
+              receive proper nutrition.
+            </p>
+          </div>
+        </div>
+        <div className="w-1/2 bg-white p-8 rounded shadow-md flex flex-col justify-center">
+          <form className="w-full max-w-lg" onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="date"
+              >
+                Date
+              </label>
+              <input
+                type="date"
+                id="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="time"
+              >
+                Time
+              </label>
+              <input
+                type="time"
+                id="time"
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="foodType"
+              >
+                Food Type
+              </label>
+              <input
+                type="text"
+                id="foodType"
+                name="foodType"
+                value={formData.foodType}
+                onChange={handleChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="quantity"
+              >
+                Quantity
+              </label>
+              <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="location"
+              >
+                Location
+              </label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="notes"
+              >
+                Notes
+              </label>
+              <input
+                type="text"
+                id="notes"
+                name="notes"
+                value={formData.notes}
+                onChange={handleChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            {error && <div className="mb-4 text-red-500">{error}</div>}
+            {success && <div className="mb-4 text-green-500">{success}</div>}
+            <button
               type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
               disabled={loading}
+              className={`bg-blue-500 text-white font-semibold py-2 px-4 rounded w-full ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               {loading ? "Submitting..." : "Submit Donation"}
-            </Button>
-          </Box>
-        </form>
-      </Paper>
-    </Container>
+            </button>
+          </form>
+        </div>
+      </div>
+    </Suspense>
   );
 };
 

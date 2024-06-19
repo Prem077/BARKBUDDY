@@ -3,18 +3,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
-import {
-  Container,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  CircularProgress,
-  Alert,
-  Box,
-  Paper,
-  Divider,
-} from "@mui/material";
 
 const Donation = () => {
   const { user } = useUser();
@@ -47,42 +35,36 @@ const Donation = () => {
   console.log(contri);
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom align="center">
-          MY Donations
-        </Typography>
-        <Divider sx={{ mb: 2 }} />
-        <Typography variant="h5" component="h2" gutterBottom align="center">
+    <div className="max-w-3xl mx-auto mt-10 p-6">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold text-center mb-4">MY Donations</h1>
+        <hr className="mb-4" />
+        <h2 className="text-xl font-semibold text-center mb-6">
           Monetary Donations
-        </Typography>
+        </h2>
         {loading ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="200px"
-          >
-            <CircularProgress />
-          </Box>
+          <div className="flex justify-center items-center min-h-[200px]">
+            <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+          </div>
         ) : error ? (
-          <Alert severity="error">{error}</Alert>
+          <div className="text-center text-red-600">{error}</div>
         ) : contri.length > 0 ? (
-          <List>
+          <ul className="space-y-4">
             {contri.map((donation) => (
-              <ListItem key={donation._id}>
-                <ListItemText
-                  primary={donation.name}
-                  secondary={`₹${donation.amount}`}
-                />
-              </ListItem>
+              <li
+                key={donation._id}
+                className="flex justify-between p-4 bg-gray-100 rounded-lg"
+              >
+                <span className="font-medium">{donation.name}</span>
+                <span className="text-gray-700">₹{donation.amount}</span>
+              </li>
             ))}
-          </List>
+          </ul>
         ) : (
-          <Typography align="center">No donations found.</Typography>
+          <div className="text-center text-gray-500">No donations found.</div>
         )}
-      </Paper>
-    </Container>
+      </div>
+    </div>
   );
 };
 

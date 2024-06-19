@@ -2,26 +2,26 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/clerk-react";
 import { format, parseISO } from "date-fns";
 
-const Expertise = () => {
+const Feeding = () => {
   const { user } = useUser();
-  const [volunteerings, setVolunteerings] = useState([]);
+  const [feedings, setFeedings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchVolunteerings = async () => {
+    const fetchFeedings = async () => {
       if (!user) return;
 
       try {
-        const response = await axios.get(`/api/expertise?user=${user.id}`);
-        setVolunteerings(response.data.expertise || []);
+        const response = await axios.get(`/api/food-donation?user=${user.id}`);
+        setFeedings(response.data.feeding || []);
         console.log(response.data);
       } catch (error) {
         console.error(
-          "Error fetching volunteerings:",
+          "Error fetching feedings:",
           error.response?.data?.msg || error.message
         );
         setError(error.response?.data?.msg || error.message);
@@ -30,14 +30,14 @@ const Expertise = () => {
       }
     };
 
-    fetchVolunteerings();
+    fetchFeedings();
   }, [user]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-10 px-4">
+    <div className="min-h-screen mt-[-2rem] bg-gray-100 flex items-center justify-center py-10 px-4">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-6xl">
         <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">
-          My Volunteerings
+          My Feedings
         </h1>
         {loading ? (
           <div className="flex justify-center items-center min-h-[200px]">
@@ -45,28 +45,36 @@ const Expertise = () => {
           </div>
         ) : error ? (
           <div className="text-red-500 text-center">{error}</div>
-        ) : volunteerings.length > 0 ? (
+        ) : feedings.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {volunteerings.map((volunteering) => (
+            {feedings.map((feeding) => (
               <div
-                key={volunteering._id}
+                key={feeding._id}
                 className="bg-gray-50 p-4 rounded-lg shadow-md"
               >
-                <h2 className="text-xl font-semibold mb-2">
-                  {volunteering.typeOfExpertise}
-                </h2>
+                <h2 className="text-xl font-semibold mb-2">{feeding.name}</h2>
                 <p className="text-gray-600 mb-1">
-                  {format(parseISO(volunteering.date), "PPP")}
+                  {format(parseISO(feeding.date), "PPP")} at {feeding.time}
                 </p>
+                <p className="text-gray-600 mb-1">Type: {feeding.foodType}</p>
+                <p className="text-gray-600 mb-1">
+                  Quantity: {feeding.quantity}
+                </p>
+                <p className="text-gray-600 mb-1">
+                  Location: {feeding.location}
+                </p>
+                {feeding.notes && (
+                  <p className="text-gray-600">Notes: {feeding.notes}</p>
+                )}
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-600">No volunteerings found.</p>
+          <p className="text-center text-gray-600">No feedings found.</p>
         )}
       </div>
     </div>
   );
 };
 
-export default Expertise;
+export default Feeding;

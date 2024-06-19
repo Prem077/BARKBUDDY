@@ -5,6 +5,8 @@ import Loading from "@/app/loading";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
+import dog from "@/public/donate.jpg";
 
 const loadRazorpayScript = () => {
   return new Promise((resolve) => {
@@ -81,7 +83,7 @@ const Payment = () => {
           toast.success("Payment successful! Redirecting to your donations...");
           setTimeout(() => {
             router.push("donate/my-donations");
-          }, 3000);
+          }, 1000);
         } catch (error) {
           console.error("Failed to save contribution details", error);
           toast.error("Failed to save contribution details. Please try again.");
@@ -102,45 +104,76 @@ const Payment = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    makePayment().finally(() => setIsLoading(false));
+  };
+
   return (
     <>
       <Suspense fallback={<Loading />}>
-        <div className="flex flex-col items-center justify-center mt-[100px]">
-          <h1 className="text-2xl">Donate to BARKBUDDY</h1>
-          <form className="w-full max-w-lg">
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="amount"
-              >
-                Donation Amount
-              </label>
-              <input
-                type="number"
-                name="amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Enter donation amount"
-                required
-              />
+        <div className="min-h-screen mt-[-2rem] flex">
+          <Toaster />
+          <div className="relative w-1/2 flex items-center justify-center bg-black">
+            <Image
+              src={dog}
+              alt="Dogs in need"
+              className="absolute inset-0 w-full h-full object-cover opacity-50"
+            />
+            <div className="relative z-10 text-white text-center p-4">
+              <h1 className="text-4xl font-bold mb-4">Donate to BARKBUDDY</h1>
+              <p className="text-lg mb-6">
+                Please donate some money to help these dogs and make their life
+                better.
+              </p>
+              <p className="text-lg">
+                Your support is greatly appreciated! Every donation makes a big
+                difference in providing food, shelter, and medical care for
+                these lovely animals.
+              </p>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setIsLoading(true);
-                makePayment().finally(() => setIsLoading(false));
-              }}
-              disabled={isLoading}
-              className={`bg-blue-500 text-white font-semibold py-2 px-4 rounded ${
-                isLoading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            >
-              {isLoading ? "Processing..." : "Donate Now"}
-            </button>
-          </form>
+          </div>
+          <div className="w-1/2 bg-white p-8 rounded shadow-md flex flex-col justify-center">
+            <h2 className="text-2xl font-semibold mb-2">
+              How Your Donation Helps
+            </h2>
+            <p className="text-gray-700 mb-6">
+              By donating, you are giving these dogs a second chance at life.
+              Your generosity helps us rescue, rehabilitate, and rehome dogs who
+              have been abandoned, neglected, or abused.
+            </p>
+
+            <form className="w-full max-w-lg" onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="amount"
+                >
+                  Donation Amount
+                </label>
+                <input
+                  type="number"
+                  name="amount"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Enter donation amount"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`bg-blue-500 text-white font-semibold py-2 px-4 rounded ${
+                  isLoading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                {isLoading ? "Processing..." : "Donate Now"}
+              </button>
+            </form>
+          </div>
         </div>
-        <Toaster />
       </Suspense>
     </>
   );

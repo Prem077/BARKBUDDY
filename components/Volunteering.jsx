@@ -3,18 +3,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
-import {
-  Container,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  CircularProgress,
-  Alert,
-  Box,
-  Paper,
-  Divider,
-} from "@mui/material";
 import { format, parseISO } from "date-fns";
 
 const Volunteering = () => {
@@ -29,7 +17,7 @@ const Volunteering = () => {
 
       try {
         const response = await axios.get(`/api/volunteer?user=${user.id}`);
-        setVolunteerings(response.data.volunteerings);
+        setVolunteerings(response.data.volunteerings || []);
         console.log(response.data);
       } catch (error) {
         console.error(
@@ -45,48 +33,52 @@ const Volunteering = () => {
     fetchVolunteerings();
   }, [user]);
 
-  console.log(volunteerings);
-
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom align="center">
+    <div className="min-h-screen mt-[-2rem] bg-gray-100 flex items-center justify-center py-10 px-4">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-6xl">
+        <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">
           My Volunteerings
-        </Typography>
-        <Divider sx={{ mb: 2 }} />
-        <Typography variant="h5" component="h2" gutterBottom align="center">
-          Volunteerings
-        </Typography>
+        </h1>
         {loading ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="200px"
-          >
-            <CircularProgress />
-          </Box>
+          <div className="flex justify-center items-center min-h-[200px]">
+            <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-500"></div>
+          </div>
         ) : error ? (
-          <Alert severity="error">{error}</Alert>
+          <div className="text-red-500 text-center">{error}</div>
         ) : volunteerings.length > 0 ? (
-          <List>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {volunteerings.map((volunteering) => (
-              <ListItem key={volunteering._id}>
-                <ListItemText
-                  primary={volunteering.name}
-                  secondary={`${format(
-                    parseISO(volunteering.date),
-                    "PPP"
-                  )} at ${volunteering.time}`}
-                />
-              </ListItem>
+              <div
+                key={volunteering._id}
+                className="bg-gray-50 p-4 rounded-lg shadow-md"
+              >
+                <h2 className="text-xl font-semibold mb-2">
+                  {volunteering.name}
+                </h2>
+                <p className="text-gray-600 mb-1">
+                  {format(parseISO(volunteering.date), "PPP")} at{" "}
+                  {volunteering.time}
+                </p>
+                <p className="text-gray-600 mb-1">
+                  Type: {volunteering.expertise}
+                </p>
+                <p className="text-gray-600 mb-1">
+                  Hours: {volunteering.hours}
+                </p>
+                <p className="text-gray-600 mb-1">
+                  Location: {volunteering.location}
+                </p>
+                {volunteering.notes && (
+                  <p className="text-gray-600">Notes: {volunteering.notes}</p>
+                )}
+              </div>
             ))}
-          </List>
+          </div>
         ) : (
-          <Typography align="center">No volunteerings found.</Typography>
+          <p className="text-center text-gray-600">No volunteerings found.</p>
         )}
-      </Paper>
-    </Container>
+      </div>
+    </div>
   );
 };
 

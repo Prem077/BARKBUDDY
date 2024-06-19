@@ -4,6 +4,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import volunteer from "@/public/volunteer.jpg";
+import Image from "next/image";
 
 const VolunteerPage = () => {
   const { user } = useUser();
@@ -52,17 +54,24 @@ const VolunteerPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="min-h-screen mt-[-2rem] bg-gray-100 flex">
       <Toaster />
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-xl">
-        <h1 className="text-3xl font-bold mb-4 text-center">
-          BARKBUDDY Volunteer Signup
-        </h1>
-        <p className="text-gray-700 mb-6 text-center">
-          Join us in making a difference in the lives of animals. Select a date
-          and time that works for you and become a part of our mission.
-        </p>
-
+      <div className="relative w-1/2 flex items-center justify-center bg-black">
+        <Image
+          src={volunteer}
+          alt="Volunteer"
+          className="absolute inset-0 w-full h-full object-cover opacity-50"
+        />
+        <div className="relative z-10 text-white text-center p-4">
+          <h1 className="text-4xl font-bold mb-4">
+            BARKBUDDY Volunteer Signup
+          </h1>
+          <p className="text-xl mb-6">
+            Join us in making a difference in the lives of animals.
+          </p>
+        </div>
+      </div>
+      <div className="w-1/2 bg-white p-8 rounded shadow-md flex flex-col justify-center">
         <h2 className="text-2xl font-semibold mb-2">Volunteer Your Time</h2>
         <p className="text-gray-700 mb-6">
           We greatly appreciate your willingness to volunteer. Please fill out
