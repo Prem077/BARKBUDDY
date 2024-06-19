@@ -1,32 +1,57 @@
 const testimonials = [
   {
     quote:
-      "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.",
-    name: "Charles Dickens",
-    title: "A Tale of Two Cities",
+      "Adopting a dog from the streets of Uttar Pradesh changed my life. From loneliness to companionship, from despair to hope, it was a transformation that I cherish every day.",
+    name: "Rajesh Kumar",
+    title: "Dog Adopter",
   },
   {
     quote:
-      "To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep.",
-    name: "William Shakespeare",
-    title: "Hamlet",
-  },
-  {
-    quote: "All that we see or seem is but a dream within a dream.",
-    name: "Edgar Allan Poe",
-    title: "A Dream Within a Dream",
+      "In Bihar, I found my best friend at the local shelter. Despite the challenges, the joy and love he brings into my life make every hardship worth it.",
+    name: "Priya Singh",
+    title: "Dog Adopter",
   },
   {
     quote:
-      "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-    name: "Jane Austen",
-    title: "Pride and Prejudice",
+      "Jharkhand shelters are full of loving souls waiting for a home. Bringing my dog home from there was the best decision I ever made.",
+    name: "Alok Mishra",
+    title: "Dog Adopter",
   },
   {
     quote:
-      "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
-    name: "Herman Melville",
-    title: "Moby-Dick",
+      "Walking into the shelter in Uttar Pradesh, I didn't know my heart was about to find its missing piece. Adopting my dog was the beginning of a beautiful journey.",
+    name: "Suresh Patel",
+    title: "Dog Adopter",
+  },
+  {
+    quote:
+      "Bihar shelters are overflowing with dogs who just want a chance to love and be loved. Bringing one home changed our family forever.",
+    name: "Anjali Verma",
+    title: "Dog Adopter",
+  },
+  {
+    quote:
+      "From the streets of Jharkhand to my home, my dog's journey is a testament to resilience and the power of second chances. I'm grateful every day.",
+    name: "Amit Kumar",
+    title: "Dog Adopter",
+  },
+  {
+    quote:
+      "Adopting from Uttar Pradesh taught me that sometimes the greatest friendships are found in the most unexpected places. My dog is proof of that.",
+    name: "Pooja Sharma",
+    title: "Dog Adopter",
+  },
+  {
+    quote:
+      "The decision to adopt from Bihar was the best decision we ever made as a family. Our dog completes us in ways we never imagined possible.",
+    name: "Vikram Singh",
+    title: "Dog Adopter",
+  },
+  {
+    quote:
+      "Bringing home a dog from Jharkhand filled our lives with laughter and love. We can't imagine life without our furry companion.",
+    name: "Ritu Gupta",
+    title: "Dog Adopter",
   },
 ];
 
@@ -35,9 +60,9 @@ import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 
 const Testimonials = () => {
   return (
-    <div className="bg-black">
-      <h1 className="text-white text-4xl font-bold px-8">
-        Look what our user have to say about us
+    <div className="bg-black ">
+      <h1 className="text-white text-4xl font-bold px-8 text-center ">
+        Testimonials
       </h1>
       <div className="h-[40rem]  flex flex-col antialiased dark:bg-white bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
         <InfiniteMovingCards

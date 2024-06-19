@@ -97,12 +97,12 @@ export const Header = () => {
   return (
     <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
       <h1 className="text-2xl md:text-7xl font-bold text-white">
-        The Ultimate <br /> development studio
+        The Ultimate <br /> for Dog Adoption
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 text-neutral-200">
-        We build beautiful products with the latest technologies and frameworks.
-        We are a team of passionate developers and designers that love to build
-        amazing products.
+        We provide a platform for dog lovers to adopt dogs and provide them with
+        a loving home. Our platform offers a wide range of dog breeds, health
+        information, and adoption success stories.
       </p>
     </div>
   );
@@ -120,10 +120,7 @@ export const ProductCard = ({ product, translate }) => {
       key={product.title}
       className="group/product h-96 w-[30rem] relative flex-shrink-0"
     >
-      <Link
-        href={product.link}
-        className="block group-hover/product:shadow-2xl "
-      >
+      <Link href={"/"} className="block group-hover/product:shadow-2xl ">
         <Image
           src={product.thumbnail}
           height="600"
