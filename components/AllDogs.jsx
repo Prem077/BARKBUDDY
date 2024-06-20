@@ -43,13 +43,13 @@ const AllDogs = () => {
     let filteredResults = dogs.filter((dog) => {
       return (
         (filters.state === "" ||
-          dog.state.toLowerCase().includes(filters.state.toLowerCase())) &&
+          dog.breed.toLowerCase().includes(filters.state.toLowerCase())) &&
         (filters.district === "" ||
-          dog.district
+          dog.training
             .toLowerCase()
             .includes(filters.district.toLowerCase())) &&
         (filters.size === "" ||
-          dog.size.toLowerCase() === filters.size.toLowerCase())
+          dog.color.toLowerCase() === filters.size.toLowerCase())
       );
     });
     setFilteredDogs(filteredResults);
@@ -58,11 +58,15 @@ const AllDogs = () => {
 
   // Array of example states and districts
   const exampleStates = [
-    "California",
-    "Texas",
-    "New York",
-    "Florida",
-    "Illinois",
+    "Labrador Retriever",
+    "German Shepherd",
+    "Golden Retriever",
+    "Bulldog",
+    "Rottweiler",
+    "Yorkshire Terrier",
+    "Boxer",
+    "Dachshund",
+    "Other",
   ];
   const exampleDistricts = [
     "District 1",
@@ -91,7 +95,7 @@ const AllDogs = () => {
       <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4 mb-4">
         <div className="w-full md:w-auto">
           <label htmlFor="state" className="block font-medium">
-            State:
+            Breed:
           </label>
           <select
             id="state"
@@ -100,7 +104,7 @@ const AllDogs = () => {
             onChange={handleFilterChange}
             className="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 w-full"
           >
-            <option value="">Select a state</option>
+            <option value="">Select a Breed</option>
             {exampleStates.map((state) => (
               <option key={state} value={state}>
                 {state}
@@ -112,20 +116,15 @@ const AllDogs = () => {
           <label htmlFor="district" className="block font-medium">
             District:
           </label>
-          <select
+          <input
+            type="text"
             id="district"
             name="district"
             value={filters.district}
             onChange={handleFilterChange}
             className="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 w-full"
-          >
-            <option value="">Select a district</option>
-            {exampleDistricts.map((district) => (
-              <option key={district} value={district}>
-                {district}
-              </option>
-            ))}
-          </select>
+            placeholder="Search for a district"
+          />
         </div>
         <div className="w-full md:w-auto">
           <label htmlFor="size" className="block font-medium">

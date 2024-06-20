@@ -30,6 +30,7 @@ export const POST = async (req) => {
   await new Promise((resolve, reject) => {
     multerUpload(req, {}, (err) => {
       if (err) {
+        console.error("Multer upload error:", err);
         reject(err);
       } else {
         resolve();
@@ -49,6 +50,7 @@ export const POST = async (req) => {
         { resource_type: "image" },
         (error, result) => {
           if (error) {
+            console.error("Cloudinary upload error:", error);
             reject(error);
           } else {
             resolve(result);

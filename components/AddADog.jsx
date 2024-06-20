@@ -92,7 +92,7 @@ const AddADog = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm p-2  focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none shadow-sm p-2 bg-gray-200  focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -105,7 +105,7 @@ const AddADog = () => {
               value={formData.place}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none p-2 shadow-sm bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -117,7 +117,7 @@ const AddADog = () => {
               value={formData.story}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div className="flex items-center">
@@ -126,7 +126,7 @@ const AddADog = () => {
               name="canLiveWithChildren"
               checked={formData.canLiveWithChildren}
               onChange={handleChange}
-              className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              className="h-4 w-4 text-indigo-600 border-gray-300 rounded bg-gray-200 focus:ring-indigo-500"
             />
             <label className="ml-2 block text-sm font-medium text-gray-700">
               Can Live With Children
@@ -138,7 +138,7 @@ const AddADog = () => {
               name="isVaccinated"
               checked={formData.isVaccinated}
               onChange={handleChange}
-              className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              className="h-4 w-4 text-indigo-600 border-gray-300 rounded bg-gray-200 focus:ring-indigo-500"
             />
             <label className="ml-2 block text-sm font-medium text-gray-700">
               Is Vaccinated
@@ -146,7 +146,7 @@ const AddADog = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Training
+              District
             </label>
             <input
               type="text"
@@ -154,7 +154,7 @@ const AddADog = () => {
               value={formData.training}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm p-2 focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none shadow-sm p-2 bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -166,7 +166,7 @@ const AddADog = () => {
               value={formData.gender}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow- p-2 focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none shadow- p-2 bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -185,7 +185,7 @@ const AddADog = () => {
               value={formData.breed}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none shadow-sm cursor-pointer bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
             >
               <option value="">Select a breed</option>
               <option value="Labrador Retriever">Labrador Retriever</option>
@@ -198,6 +198,7 @@ const AddADog = () => {
               <option value="Yorkshire Terrier">Yorkshire Terrier</option>
               <option value="Boxer">Boxer</option>
               <option value="Dachshund">Dachshund</option>
+              <option value="Other">Other</option>
             </select>
           </div>
           <div>
@@ -210,11 +211,11 @@ const AddADog = () => {
               value={formData.age}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            {/* <label className="block text-sm font-medium text-gray-700">
               Color
             </label>
             <input
@@ -223,8 +224,28 @@ const AddADog = () => {
               value={formData.color}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            />
+              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 p-2 focus:border-indigo-500 focus:ring-ind
+              igo-500"
+            /> */}
+            <label
+              htmlFor="breed"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Size
+            </label>
+            <select
+              id="breed"
+              name="color"
+              value={formData.color}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full rounded-lg border-none shadow-sm cursor-pointer bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
+            >
+              <option value="">Select a size</option>
+              <option value="Small">Small</option>
+              <option value="Medium"> Medium</option>
+              <option value="Large"> Large</option>
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -236,7 +257,7 @@ const AddADog = () => {
               value={formData.weight}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -249,7 +270,7 @@ const AddADog = () => {
               value={formData.height}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
