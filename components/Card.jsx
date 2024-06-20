@@ -11,8 +11,8 @@ const Card = ({ dog }) => {
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-2">{dog.name}</h2>
         <p className="text-gray-700">Breed: {dog.breed}</p>
-        <p className="text-gray-700">Age: {dog.age}</p>
         <p className="text-gray-700">Gender: {dog.gender}</p>
+        <p className="text-gray-700">Training: {dog.training}</p>
 
         <Link href={`/adopt-a-dog/dog/${dog._id}`}>
           <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
