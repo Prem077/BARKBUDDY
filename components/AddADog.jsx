@@ -55,6 +55,7 @@ const AddADog = () => {
       const finalFormData = {
         ...formData,
         pictureURL,
+        story: "xyz", // default value
         age: 1, // default value
         weight: 1, // default value
         height: 1, // default value
@@ -111,7 +112,7 @@ const AddADog = () => {
               className="mt-1 block w-full rounded-lg border-none p-2 shadow-sm bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700">
               Story
             </label>
@@ -122,7 +123,7 @@ const AddADog = () => {
               required
               className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
             />
-          </div>
+          </div> */}
           <div className="flex items-center">
             <input
               type="checkbox"

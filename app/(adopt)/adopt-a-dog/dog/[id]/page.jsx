@@ -96,7 +96,7 @@ const Page = () => {
             <FaMapMarkerAlt className="mr-2" />
             {selectedDog.place}
           </p>
-          <p className="text-gray-700 mb-4">{selectedDog.story}</p>
+          {/* <p className="text-gray-700 mb-4">{selectedDog.story}</p> */}
 
           <Link href={`/checkout`}>
             <button className="mt-6 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
