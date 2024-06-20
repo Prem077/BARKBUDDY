@@ -17,10 +17,7 @@ const AddADog = () => {
     training: "",
     gender: "Male",
     breed: "",
-    age: "",
     color: "",
-    weight: "",
-    height: "",
     picture: null,
     pictureURL: "",
   });
@@ -55,7 +52,13 @@ const AddADog = () => {
       });
       const pictureURL = uploadRes.data.msg.secure_url;
 
-      const finalFormData = { ...formData, pictureURL };
+      const finalFormData = {
+        ...formData,
+        pictureURL,
+        age: 1, // default value
+        weight: 1, // default value
+        height: 1, // default value
+      };
 
       const response = await axios.post("/api/add", finalFormData);
       toast.success("Dog listed successfully");
@@ -202,19 +205,6 @@ const AddADog = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Age
-            </label>
-            <input
-              type="text"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
             {/* <label className="block text-sm font-medium text-gray-700">
               Color
             </label>
@@ -249,45 +239,19 @@ const AddADog = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Weight (kg)
-            </label>
-            <input
-              type="number"
-              name="weight"
-              value={formData.weight}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Height (cm)
-            </label>
-            <input
-              type="number"
-              name="height"
-              value={formData.height}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
               Picture
             </label>
             <div
               {...getRootProps()}
               className={`mt-1 p-6 rounded-lg ${
                 isDragActive ? "border-indigo-600" : "border-none"
-              } bg-gray-50`}
+              } bg-gray-200`}
             >
               <input {...getInputProps()} />
               {formData.picture ? (
                 <p>{formData.picture.name}</p>
               ) : (
-                <p className="text-center text-gray-500">
+                <p className="text-center  text-gray-500">
                   Drag &apos;n&apos; drop a picture here, or click to select one
                 </p>
               )}
