@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { toast, Toaster } from "react-hot-toast";
 import image from "@/public/adopt.webp";
 
 export default function SinglePageForm() {
@@ -46,6 +47,7 @@ export default function SinglePageForm() {
     // Simulating form submission
     setError(["Form submission not implemented"]);
     setSuccess(true);
+    toast.success("Form submitted successfully!");
 
     // Uncomment below code when you have actual form submission logic
 
@@ -60,6 +62,8 @@ export default function SinglePageForm() {
     setError(msg);
     setSuccess(success);
     console.log("msg", msg);
+    toast.success("Redirecting...!");
+    router.push("/");
     if (success) {
       // Handle success
       router.push("/");
@@ -69,6 +73,7 @@ export default function SinglePageForm() {
 
   return (
     <div className="min-h-screen flex flex-col mt-[-2rem] md:flex-row">
+      <Toaster />
       {/* Left Section */}
       <div className="relative w-full md:w-1/2 flex items-center justify-center bg-black">
         <Image
@@ -87,6 +92,12 @@ export default function SinglePageForm() {
 
       {/* Right Section */}
       <div className="w-full md:w-1/2 bg-white p-8 rounded shadow-md flex flex-col justify-center">
+        <button
+          onClick={() => router.back()}
+          className="mb-4 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition duration-300"
+        >
+          Back
+        </button>
         <h2 className="text-2xl font-semibold mb-2 text-center">
           Adoption Inquiry Form
         </h2>
@@ -253,11 +264,6 @@ export default function SinglePageForm() {
               Submit
             </button>
           </div>
-          {success && (
-            <div className="text-green-800 bg-gray-100 px-4 py-2 rounded-md mt-4">
-              Form submitted successfully!
-            </div>
-          )}
         </form>
       </div>
     </div>

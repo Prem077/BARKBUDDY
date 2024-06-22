@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./Card";
+import { Toaster, toast } from "react-hot-toast"; // Import react-hot-toast
 
 const AllDogs = () => {
   const [dogs, setDogs] = useState([]);
@@ -13,9 +14,11 @@ const AllDogs = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [dogsPerPage] = useState(6); // Number of dogs per page
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchDogs = async () => {
+      setLoading(true); // Set loading to true before starting fetch
       try {
         const response = await axios.get("/api/add");
         if (response.data.success) {
@@ -28,6 +31,7 @@ const AllDogs = () => {
           error.response?.data?.msg || error.message
         );
       }
+      setLoading(false); // Set loading to false after fetch completes
     };
     fetchDogs();
   }, []);
@@ -83,14 +87,17 @@ const AllDogs = () => {
   const currentDogs = filteredDogs.slice(indexOfFirstDog, indexOfLastDog);
 
   // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    toast(`Page ${pageNumber} loaded!`); // Show toast notification
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-8 bg-gray-50 shadow-lg rounded-lg">
+      <Toaster /> {/* Add the Toaster component */}
       <h1 className="text-3xl font-bold mb-6 text-center">
         Available Dogs for Adoption
       </h1>
-
       {/* Filters */}
       <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4 mb-4">
         <div className="w-full md:w-auto">
@@ -146,35 +153,41 @@ const AllDogs = () => {
           </select>
         </div>
       </div>
+      {/* Loading indicator */}
+      {loading ? (
+        <p className="text-center text-gray-500">Loading...</p>
+      ) : (
+        <>
+          {/* Dogs */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {currentDogs.length > 0 ? (
+              currentDogs.map((dog) => <Card key={dog._id} dog={dog} />)
+            ) : (
+              <p className="text-center text-gray-500">
+                No dogs match the current filters.
+              </p>
+            )}
+          </div>
 
-      {/* Dogs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {currentDogs.length > 0 ? (
-          currentDogs.map((dog) => <Card key={dog._id} dog={dog} />)
-        ) : (
-          <p className="text-center text-gray-500">
-            No dogs match the current filters.
-          </p>
-        )}
-      </div>
-
-      {/* Pagination */}
-      {filteredDogs.length > dogsPerPage && (
-        <div className="flex justify-center mt-4">
-          {[...Array(Math.ceil(filteredDogs.length / dogsPerPage))].map(
-            (_, index) => (
-              <button
-                key={index}
-                onClick={() => paginate(index + 1)}
-                className={`px-4 py-2 mx-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none ${
-                  currentPage === index + 1 ? "bg-blue-600" : ""
-                }`}
-              >
-                {index + 1}
-              </button>
-            )
+          {/* Pagination */}
+          {filteredDogs.length > dogsPerPage && (
+            <div className="flex justify-center mt-4">
+              {[...Array(Math.ceil(filteredDogs.length / dogsPerPage))].map(
+                (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => paginate(index + 1)}
+                    className={`px-4 py-2 mx-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none ${
+                      currentPage === index + 1 ? "bg-blue-600" : ""
+                    }`}
+                  >
+                    {index + 1}
+                  </button>
+                )
+              )}
+            </div>
           )}
-        </div>
+        </>
       )}
     </div>
   );

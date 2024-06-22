@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { FaDog, FaMapMarkerAlt, FaDollarSign } from "react-icons/fa";
 import { GiSittingDog } from "react-icons/gi";
+import { toast, Toaster } from "react-hot-toast";
 
 const Page = () => {
   const pathname = usePathname();
@@ -18,6 +19,7 @@ const Page = () => {
   useEffect(() => {
     const fetchDog = async () => {
       setLoading(true);
+      const toastId = toast.loading("Loading...");
       try {
         const response = await axios.get(`/api/add/${id}`);
         if (response.data.success) {
@@ -29,6 +31,7 @@ const Page = () => {
         setError(error.response?.data?.msg || error.message);
       } finally {
         setLoading(false);
+        toast.dismiss(toastId);
       }
     };
 
@@ -41,6 +44,7 @@ const Page = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-xl font-semibold">Loading...</p>
+        <Toaster />
       </div>
     );
   }
@@ -49,6 +53,7 @@ const Page = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-xl font-semibold text-red-500">Error: {error}</p>
+        <Toaster />
       </div>
     );
   }
@@ -57,6 +62,7 @@ const Page = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-xl font-semibold">Dog not found</p>
+        <Toaster />
       </div>
     );
   }
@@ -83,9 +89,9 @@ const Page = () => {
           <p className="text-gray-700 text-lg mb-2">
             <span className="font-semibold">Breed:</span> {selectedDog.breed}
           </p>
-          <p className="text-gray-700 text-lg mb-2">
+          {/* <p className="text-gray-700 text-lg mb-2">
             <span className="font-semibold">Age:</span> {selectedDog.age}
-          </p>
+          </p> */}
           <p className="text-gray-700 text-lg mb-2">
             <span className="font-semibold">Gender:</span> {selectedDog.gender}
           </p>
@@ -105,6 +111,7 @@ const Page = () => {
           </Link>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

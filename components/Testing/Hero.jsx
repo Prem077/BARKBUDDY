@@ -5,8 +5,8 @@ import Testimonials from "./Testimonials";
 import Spark from "../Spark";
 import Image from "next/image";
 import img1 from "@/public/adop.jpg";
-import img2 from "@/public/images.jpg";
-import img3 from "@/public/dog.jpeg";
+import img2 from "@/public/images.jpeg";
+import img3 from "@/public/kutta.jpeg";
 import Link from "next/link";
 import Parallel from "../Parallel";
 

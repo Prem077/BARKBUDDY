@@ -5,6 +5,7 @@ import ProductList from "@/components/ProductList";
 import Filter from "@/components/Filter";
 import { initialProducts } from "@/constants";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 
 const loadRazorpayScript = () => {
   return new Promise((resolve) => {
@@ -43,10 +44,14 @@ const ProductPage = () => {
   }, [cart]);
 
   const makePayment = async () => {
+    const loadingToastId = toast.loading("Processing payment...");
+
     const scriptLoaded = await loadRazorpayScript();
 
     if (!scriptLoaded) {
-      alert("Failed to load Razorpay SDK. Are you online?");
+      toast.error("Failed to load Razorpay SDK. Are you online?", {
+        id: loadingToastId,
+      });
       return;
     }
 
@@ -65,6 +70,7 @@ const ProductPage = () => {
       handler: async function (response) {
         console.log(response);
         console.log(response.razorpay_order_id);
+        toast.success("Payment successful!", { id: loadingToastId });
         router.push(`/buy/${response.razorpay_order_id}`);
       },
       prefill: {
@@ -78,7 +84,10 @@ const ProductPage = () => {
     paymentObject.open();
 
     paymentObject.on("payment.failed", function (response) {
-      alert("Payment failed. Please try again. Contact support for help");
+      toast.error(
+        "Payment failed. Please try again. Contact support for help",
+        { id: loadingToastId }
+      );
     });
   };
 
@@ -89,6 +98,18 @@ const ProductPage = () => {
         updatedCart[productId]++;
       } else {
         updatedCart[productId] = 1;
+      }
+      return updatedCart;
+    });
+  };
+
+  const handleRemoveFromCart = (productId) => {
+    setCart((prevCart) => {
+      const updatedCart = { ...prevCart };
+      if (updatedCart[productId] > 1) {
+        updatedCart[productId]--;
+      } else {
+        delete updatedCart[productId];
       }
       return updatedCart;
     });
@@ -123,6 +144,7 @@ const ProductPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Toaster />
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-bold">Product Page</h1>
       </div>
@@ -158,8 +180,19 @@ const ProductPage = () => {
                   (p) => p.id === parseInt(productId)
                 );
                 return (
-                  <li key={productId} className="mb-2">
-                    {product.name} x {cart[productId]}
+                  <li
+                    key={productId}
+                    className="mb-2 flex justify-between items-center"
+                  >
+                    <div>
+                      {product.name} x {cart[productId]}
+                    </div>
+                    <button
+                      onClick={() => handleRemoveFromCart(productId)}
+                      className="ml-4 bg-red-500 text-white px-2 py-1 rounded"
+                    >
+                      Remove
+                    </button>
                   </li>
                 );
               })}

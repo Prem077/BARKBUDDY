@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
@@ -42,6 +43,8 @@ const AddADog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const loadingToastId = toast.loading("Listing dog...");
+
     const uploadData = new FormData();
     uploadData.append("file", formData.picture);
     uploadData.append("name", formData.name);
@@ -62,11 +65,11 @@ const AddADog = () => {
       };
 
       const response = await axios.post("/api/add", finalFormData);
-      toast.success("Dog listed successfully");
+      toast.success("Dog listed successfully", { id: loadingToastId });
       console.log("Dog listed successfully:", response.data);
       router.push("/adopt-a-dog");
     } catch (error) {
-      toast.error("Error listing dog");
+      toast.error("Error listing dog", { id: loadingToastId });
       console.error(
         "Error listing dog:",
         error.response?.data?.msg || error.message
@@ -75,14 +78,15 @@ const AddADog = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen mt-[-2rem] bg-gray-50 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
+      <Toaster />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="p-16 bg-white shadow-lg rounded-xl w-full"
+        className="p-8 bg-white shadow-lg rounded-xl w-full max-w-lg"
       >
-        <h1 className="text-3xl font-semibold mb-8 text-center text-indigo-700">
+        <h1 className="text-3xl font-semibold mb-6 text-center text-indigo-700">
           List a Dog for Adoption
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -96,7 +100,7 @@ const AddADog = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm p-2 bg-gray-200  focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -109,28 +113,16 @@ const AddADog = () => {
               value={formData.place}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none p-2 shadow-sm bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Story
-            </label>
-            <textarea
-              name="story"
-              value={formData.story}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
-            />
-          </div> */}
           <div className="flex items-center">
             <input
               type="checkbox"
               name="canLiveWithChildren"
               checked={formData.canLiveWithChildren}
               onChange={handleChange}
-              className="h-4 w-4 text-indigo-600 border-gray-300 rounded bg-gray-200 focus:ring-indigo-500"
+              className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
             />
             <label className="ml-2 block text-sm font-medium text-gray-700">
               Can Live With Children
@@ -142,7 +134,7 @@ const AddADog = () => {
               name="isVaccinated"
               checked={formData.isVaccinated}
               onChange={handleChange}
-              className="h-4 w-4 text-indigo-600 border-gray-300 rounded bg-gray-200 focus:ring-indigo-500"
+              className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
             />
             <label className="ml-2 block text-sm font-medium text-gray-700">
               Is Vaccinated
@@ -158,7 +150,7 @@ const AddADog = () => {
               value={formData.training}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm p-2 bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -170,7 +162,7 @@ const AddADog = () => {
               value={formData.gender}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow- p-2 bg-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 focus:border-indigo-500 focus:ring-indigo-500"
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -189,7 +181,7 @@ const AddADog = () => {
               value={formData.breed}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm cursor-pointer bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 focus:border-indigo-500 focus:ring-indigo-500"
             >
               <option value="">Select a breed</option>
               <option value="Labrador Retriever">Labrador Retriever</option>
@@ -206,36 +198,24 @@ const AddADog = () => {
             </select>
           </div>
           <div>
-            {/* <label className="block text-sm font-medium text-gray-700">
-              Color
-            </label>
-            <input
-              type="text"
-              name="color"
-              value={formData.color}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm bg-gray-200 p-2 focus:border-indigo-500 focus:ring-ind
-              igo-500"
-            /> */}
             <label
-              htmlFor="breed"
+              htmlFor="color"
               className="block text-sm font-medium text-gray-700"
             >
               Size
             </label>
             <select
-              id="breed"
+              id="color"
               name="color"
               value={formData.color}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-lg border-none shadow-sm cursor-pointer bg-gray-200 p-2 focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-2 focus:border-indigo-500 focus:ring-indigo-500"
             >
               <option value="">Select a size</option>
               <option value="Small">Small</option>
-              <option value="Medium"> Medium</option>
-              <option value="Large"> Large</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
             </select>
           </div>
           <div>
@@ -244,15 +224,15 @@ const AddADog = () => {
             </label>
             <div
               {...getRootProps()}
-              className={`mt-1 p-6 rounded-lg ${
-                isDragActive ? "border-indigo-600" : "border-none"
-              } bg-gray-200`}
+              className={`mt-1 p-6 rounded-lg border-dashed border-2 ${
+                isDragActive ? "border-indigo-600" : "border-gray-300"
+              } bg-gray-50`}
             >
               <input {...getInputProps()} />
               {formData.picture ? (
                 <p>{formData.picture.name}</p>
               ) : (
-                <p className="text-center  text-gray-500">
+                <p className="text-center text-gray-500">
                   Drag &apos;n&apos; drop a picture here, or click to select one
                 </p>
               )}
