@@ -6,10 +6,10 @@ export const COMPANY_LINKS = [
 ];
 
 export const SUPPORT_LINKS = [
+  { name: "Our Team", link: "/our-team" },
   { name: "Contribute", link: "/contribute" },
   { name: "Contact Us", link: "/contact" },
   { name: "FAQ", link: "/faq" },
-  { name: "Terms of Service", link: "#terms" },
 ];
 
 export const SOCIAL_LINKS = [
