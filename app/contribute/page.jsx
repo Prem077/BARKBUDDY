@@ -6,7 +6,7 @@ const Contribute = () => {
     <div className="min-h-screen mt-[-5rem] bg-gray-100">
       <div className="h-[50rem] w-full bg-black dark:bg-white  bg-grid-small-white/[0.2] dark:bg-grid-small-black/[0.2] relative flex items-center justify-center">
         {/* Radial gradient for the container to give a faded look */}
-        <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black dark:bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black dark:bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_2000%,black)]"></div>
         <div className="">
           <main className="max-w-4xl mx-auto py-12 px-6">
             <h1 className="text-4xl font-bold text-center text-white mb-8">
